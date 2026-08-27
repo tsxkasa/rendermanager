@@ -15,10 +15,6 @@ public class MainWindow : Window, IDisposable
 {
     private readonly Plugin plugin;
 
-
-    // We give this window a hidden ID using ##.
-    // The user will see "My Amazing Window" as window title,
-    // but for ImGui the ID is "My Amazing Window##With a hidden ID"
     public MainWindow(Plugin plugin)
         : base("Manage Render", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
     {
@@ -52,6 +48,7 @@ public class MainWindow : Window, IDisposable
 
         var tarFps = plugin.Configuration.FpsCap;
         if (ImGui.SliderInt("FPS Cap", ref tarFps, 1, 60)) {
+            plugin.FrameLimiter.TargetFps = tarFps;
             plugin.Configuration.FpsCap = tarFps;
 
             plugin.Configuration.Save();
