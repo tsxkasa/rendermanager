@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
+    <PropertyGroup>
+        <Version>0.0.0.1</Version>
+        <!-- Manifest fields (see https://github.com/goatcorp/DalamudPackager/blob/827d88dc/DalamudPackager/DalamudPackager.cs#L420) -->
+        <Author>tsukasa</Author>
+        <Name>Render Manager</Name>
+        <Punchline>Disable rendering or caps FPS.</Punchline>
+        <Description>Disables rendering or caps FPS.</Description>
+        <RepoUrl></RepoUrl>
+        <Tags></Tags>
+    </PropertyGroup>
+
+    <ItemGroup></ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dalamud.NET.Sdk" Version="15.0.0" />
+        <PackageReference Include="ECommons" Version="3.2.1.18" />
+    </ItemGroup>
+</Project>
