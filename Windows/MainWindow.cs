@@ -8,6 +8,7 @@ using Dalamud.Interface.Windowing;
 using ECommons.GameFunctions;
 using ECommons.Throttlers;
 using Lumina.Excel.Sheets;
+using RenderManager.System;
 
 namespace RenderManager.Windows;
 
@@ -62,6 +63,26 @@ public class MainWindow : Window, IDisposable
             plugin.FrameLimiter.TargetFps = plugin.Configuration.FpsCap;
 
             plugin.Configuration.Save();
+        }
+
+        var webhookEnabled = DiscordWebhook.IsWebhookEnabled;
+        if (ImGui.Checkbox("Discord Webhook Enabled", ref webhookEnabled)) {
+            DiscordWebhook.IsWebhookEnabled = webhookEnabled;
+        }
+
+        var hookUrl = DiscordWebhook.WebhookUrl;
+        if (ImGui.InputText("Webhook Url", ref hookUrl, 512)) {
+            DiscordWebhook.WebhookUrl = hookUrl;
+        }
+
+        var webOnJoin = DiscordWebhook.IsHookOnPartyJoin;
+        if (ImGui.Checkbox("Notify on join", ref webOnJoin)) {
+            DiscordWebhook.IsHookOnPartyJoin = webOnJoin;
+        }
+
+        var webOnLeave = DiscordWebhook.IsHookOnPartyLeave;
+        if (ImGui.Checkbox("Notify on join", ref webOnLeave)) {
+            DiscordWebhook.IsHookOnPartyJoin = webOnLeave;
         }
     }
 }
