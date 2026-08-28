@@ -1,11 +1,8 @@
 using Dalamud.Game.Command;
-using Dalamud.IoC;
 using Dalamud.Plugin;
-using System.IO;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using RenderManager.Windows;
-using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using ECommons;
 using RenderManager.System;
 
@@ -13,16 +10,8 @@ namespace RenderManager;
 
 public sealed class Plugin : IDalamudPlugin
 {
-    [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
-    [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
-    [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
-    [PluginService] internal static IClientState ClientState { get; private set; } = null!;
-    [PluginService] internal static IPlayerState PlayerState { get; private set; } = null!;
-    [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
-    [PluginService] internal static IPluginLog Log { get; private set; } = null!;
-
-    [PluginService] internal static IFramework Framework {get; private set; } = null!;
-
+    private IDalamudPluginInterface PluginInterface { get; init; }
+    private ICommandManager CommandManager { get; init; }
     private const string CommandName = "/renman";
 
     public Configuration Configuration { get; init; }
@@ -33,14 +22,17 @@ public sealed class Plugin : IDalamudPlugin
     public FrameLimiter FrameLimiter { get; init; }
     private MainWindow MainWindow { get; init; }
 
-    public Plugin()
+    public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commandManager) 
     {
+        pluginInterface.Create<Service>();
+        PluginInterface = pluginInterface;
+        CommandManager = commandManager;
+
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
-        FrameLimiter = new FrameLimiter(Framework);
+        FrameLimiter = new FrameLimiter();
 
         ECommonsMain.Init(PluginInterface, this, Module.All);
-
 
         MainWindow = new MainWindow(this);
 
@@ -60,7 +52,7 @@ public sealed class Plugin : IDalamudPlugin
         // Add a simple message to the log with level set to information
         // Use /xllog to open the log window in-game
         // Example Output: 00:57:54.959 | INF | [RenderManager] ===A cool log message from Sample Plugin===
-        Log.Information($"==={PluginInterface.Manifest.Name} finished setup===");
+        Service.Log.Information($"==={PluginInterface.Manifest.Name} finished setup===");
     }
 
     public void Dispose()

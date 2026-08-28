@@ -14,6 +14,6 @@ public class Configuration : IPluginConfiguration
     public bool IsFpsCapped { get; set; } = false;
     public void Save()
     {
-        Plugin.PluginInterface.SavePluginConfig(this);
+        Service.PluginInterface.SavePluginConfig(this);
     }
 }
