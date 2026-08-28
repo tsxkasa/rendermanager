@@ -65,6 +65,8 @@ public class MainWindow : Window, IDisposable
             plugin.Configuration.Save();
         }
 
+        ImGui.Spacing();
+        ImGui.Text("Party finder notifications");
         var webhookEnabled = DiscordWebhook.IsWebhookEnabled;
         if (ImGui.Checkbox("Discord Webhook Enabled", ref webhookEnabled)) {
             if (webhookEnabled) {
