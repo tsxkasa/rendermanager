@@ -66,7 +66,7 @@ public class MainWindow : Window, IDisposable
         }
 
         ImGui.Spacing();
-        ImGui.Text("Party finder notifications");
+        ImGui.Text("Party Notifications");
         var webhookEnabled = DiscordWebhook.IsWebhookEnabled;
         if (ImGui.Checkbox("Discord Webhook Enabled", ref webhookEnabled)) {
             if (webhookEnabled) {
@@ -79,24 +79,26 @@ public class MainWindow : Window, IDisposable
             DiscordWebhook.IsWebhookEnabled = webhookEnabled;
         }
 
-        var hookUrl = DiscordWebhook.WebhookUrl;
-        if (ImGui.InputText("Webhook Url", ref hookUrl, 512)) {
-            DiscordWebhook.WebhookUrl = hookUrl;
-        }
+        if (ImGui.CollapsingHeader("<Webhook Settings>")) {
+            var hookUrl = DiscordWebhook.WebhookUrl;
+            if (ImGui.InputText("Webhook Url", ref hookUrl, 512)) {
+                DiscordWebhook.WebhookUrl = hookUrl;
+            }
 
-        var webOnFull = DiscordWebhook.IsHookOnPartyFill;
-        if (ImGui.Checkbox("Notify on fill", ref webOnFull)) {
-            DiscordWebhook.IsHookOnPartyFill = webOnFull;
-        }
+            var webOnFull = DiscordWebhook.IsHookOnPartyFill;
+            if (ImGui.Checkbox("Notify on fill", ref webOnFull)) {
+                DiscordWebhook.IsHookOnPartyFill = webOnFull;
+            }
 
-        var webOnJoin = DiscordWebhook.IsHookOnPartyJoin;
-        if (ImGui.Checkbox("Notify on join", ref webOnJoin)) {
-            DiscordWebhook.IsHookOnPartyJoin = webOnJoin;
-        }
+            var webOnJoin = DiscordWebhook.IsHookOnPartyJoin;
+            if (ImGui.Checkbox("Notify on join", ref webOnJoin)) {
+                DiscordWebhook.IsHookOnPartyJoin = webOnJoin;
+            }
 
-        var webOnLeave = DiscordWebhook.IsHookOnPartyLeave;
-        if (ImGui.Checkbox("Notify on leave", ref webOnLeave)) {
-            DiscordWebhook.IsHookOnPartyJoin = webOnLeave;
+            var webOnLeave = DiscordWebhook.IsHookOnPartyLeave;
+            if (ImGui.Checkbox("Notify on leave", ref webOnLeave)) {
+                DiscordWebhook.IsHookOnPartyLeave = webOnLeave;
+            }
         }
     }
 }
