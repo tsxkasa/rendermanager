@@ -67,6 +67,13 @@ public class MainWindow : Window, IDisposable
 
         var webhookEnabled = DiscordWebhook.IsWebhookEnabled;
         if (ImGui.Checkbox("Discord Webhook Enabled", ref webhookEnabled)) {
+            if (webhookEnabled) {
+                CrossWorldPartyListSystem.Start();
+                PartyListener.On();
+            } else {
+                CrossWorldPartyListSystem.Stop();
+                PartyListener.Off();
+            }
             DiscordWebhook.IsWebhookEnabled = webhookEnabled;
         }
 
@@ -75,13 +82,18 @@ public class MainWindow : Window, IDisposable
             DiscordWebhook.WebhookUrl = hookUrl;
         }
 
+        var webOnFull = DiscordWebhook.IsHookOnPartyFill;
+        if (ImGui.Checkbox("Notify on fill", ref webOnFull)) {
+            DiscordWebhook.IsHookOnPartyFill = webOnFull;
+        }
+
         var webOnJoin = DiscordWebhook.IsHookOnPartyJoin;
         if (ImGui.Checkbox("Notify on join", ref webOnJoin)) {
             DiscordWebhook.IsHookOnPartyJoin = webOnJoin;
         }
 
         var webOnLeave = DiscordWebhook.IsHookOnPartyLeave;
-        if (ImGui.Checkbox("Notify on join", ref webOnLeave)) {
+        if (ImGui.Checkbox("Notify on leave", ref webOnLeave)) {
             DiscordWebhook.IsHookOnPartyJoin = webOnLeave;
         }
     }
